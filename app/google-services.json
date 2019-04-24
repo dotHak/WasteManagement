@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "938506353560",
+    "firebase_url": "https://wastemanagement-619d1.firebaseio.com",
+    "project_id": "wastemanagement-619d1",
+    "storage_bucket": "wastemanagement-619d1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:938506353560:android:b923f6ad79ad4101",
+        "android_client_info": {
+          "package_name": "com.icp.wastemanagementsystem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "938506353560-b2id2pm0qqdu1t3qrbf899nh1g9bmauj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9a8sm5tcnskmbJxr5LivAM6Jjt-wfduc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "938506353560-b2id2pm0qqdu1t3qrbf899nh1g9bmauj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
