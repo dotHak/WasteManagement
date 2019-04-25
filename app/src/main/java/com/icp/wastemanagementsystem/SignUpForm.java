@@ -60,8 +60,8 @@ public class SignUpForm extends AppCompatActivity {
             mConfirmPasswordView.setError(getString(R.string.error_field_required));
             focusView = mConfirmPasswordView;
             cancel = true;
-        }if(confirmPassword.equals(password)){
-            mConfirmPasswordView.setError(getString(R.string.error_invalid_password));
+        }if(!confirmPassword.equals(password)){
+            mConfirmPasswordView.setError(getString(R.string.error_not_match_password));
             focusView = mConfirmPasswordView;
             cancel = true;
         }
@@ -96,8 +96,7 @@ public class SignUpForm extends AppCompatActivity {
 
 
         private boolean isPasswordValid (String password){
-            String confirmPassword = mConfirmPasswordView.getText().toString();
-            return confirmPassword.equals(password) && password.length() > 4;
+            return password.length() > 4;
         }
 
         private boolean isEmailValid (String email){

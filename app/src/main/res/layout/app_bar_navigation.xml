@@ -28,6 +28,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:backgroundTint="@color/colorAccent"
+        app:fabSize="auto"
+        app:srcCompat="@drawable/icons_100">
+
+    </android.support.design.widget.FloatingActionButton>
 
 </android.support.design.widget.CoordinatorLayout>

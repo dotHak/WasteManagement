@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".BarcodeChoiceAcitivty">
+
+    <TextView
+        android:id="@+id/status_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/barcode_header"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_conversion_wrapHeight="148"
+        tools:layout_conversion_wrapWidth="996" />
+
+    <TextView
+        android:id="@+id/barcode_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/status_message"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_conversion_wrapHeight="79"
+        tools:layout_conversion_wrapWidth="0"
+        tools:layout_editor_absoluteY="182dp" />
+
+    <Button
+        android:id="@+id/read_barcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/read_barcode"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_conversion_wrapHeight="126"
+        style="@style/Widget.AppCompat.Button.Colored"
+        tools:layout_conversion_wrapWidth="330" />
+
+    <CheckBox
+        android:id="@+id/auto_focus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="348dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="8dp"
+        android:checked="false"
+        android:text="@string/auto_focus"
+        app:layout_constraintBottom_toTopOf="@+id/read_barcode"
+        app:layout_constraintEnd_toStartOf="@+id/use_flash"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barcode_value"
+        app:layout_constraintVertical_bias="0.372"
+        tools:layout_conversion_wrapHeight="84"
+        tools:layout_conversion_wrapWidth="269" />
+
+    <CheckBox
+        android:id="@+id/use_flash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="40dp"
+        android:checked="false"
+        android:text="@string/use_flash"
+        app:layout_constraintBottom_toTopOf="@+id/read_barcode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/auto_focus"
+        tools:layout_conversion_wrapHeight="84"
+        tools:layout_conversion_wrapWidth="244" />
+
+</android.support.constraint.ConstraintLayout>
