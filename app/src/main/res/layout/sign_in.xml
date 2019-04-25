@@ -5,9 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/divider"
-    android:minWidth="@android:dimen/dialog_min_width_minor"
-    app:layout_constraintWidth_max="wrap"
-    tools:context=".MainActivity">
+    tools:context=".SignInForm">
 
     <EditText
         android:id="@+id/emailField"
@@ -100,7 +98,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/recycle" />
+        android:contentDescription="TODO" app:srcCompat="@drawable/recycle" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline13"

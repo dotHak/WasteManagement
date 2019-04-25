@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/divider"
-    android:minWidth="@android:dimen/dialog_min_width_minor"
-    app:layout_constraintWidth_max="wrap"
     tools:context=".MainActivity">
 
     <TextView
@@ -40,7 +39,8 @@
         app:layout_constraintBottom_toTopOf="@id/signInButton"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeText" />
+        app:layout_constraintTop_toBottomOf="@+id/welcomeText"
+        android:onClick="openSignUpForm"/>
 
     <Button
         android:id="@+id/signInButton"
@@ -59,7 +59,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/signUpButton" />
+        app:layout_constraintTop_toBottomOf="@+id/signUpButton"
+        android:onClick="openSignInForm"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline4"
@@ -96,7 +97,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/recycle_plastics" />
+        android:contentDescription="TODO" app:srcCompat="@drawable/recycle_plastics" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline15"

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/divider">
+    android:background="@color/divider"
+    tools:context=".Stakeholders">
 
     <TextView
         android:id="@+id/stakeholders_text"
@@ -15,7 +16,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:fontFamily="monospace"
-        android:text="Stackholders"
+        android:text="Stakeholders"
         android:textColor="@color/colorPrimaryText"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@id/studentsButton"
@@ -143,5 +144,5 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guideline10"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/recycle" />
+        android:contentDescription="TODO" app:srcCompat="@drawable/recycle" />
 </android.support.constraint.ConstraintLayout>
