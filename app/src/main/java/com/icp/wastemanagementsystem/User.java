@@ -25,7 +25,6 @@ public class User {
         mBarcodeList = new Hashtable<>();
     }
 
-
     public void updateList(String barcode) {
         String today = DateFormat.getDateInstance(DateFormat.LONG, Locale.UK).format(new Date());
         if (mBarcodeList.isEmpty()) {

@@ -18,6 +18,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class SignUpActivity extends AppCompatActivity {
@@ -28,8 +30,9 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText mConfirmPasswordView;
     private Button mSignUpButton;
 
-    private FirebaseAuth mAuth;
+    private DatabaseReference reff; //used to store data into firebase database
 
+    User user;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +43,8 @@ public class SignUpActivity extends AppCompatActivity {
         mPasswordView = findViewById(R.id.signUpPasswordField);
         mConfirmPasswordView = findViewById(R.id.signupConfirmPasswordField);
         mSignUpButton = findViewById(R.id.sigupRegisterButton);
-
+        user = new User();
+        reff = FirebaseDatabase.getInstance().getReference().child("User");
         mSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,6 +52,8 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
         mAuth = FirebaseAuth.getInstance();
+
+
     }
 
 
