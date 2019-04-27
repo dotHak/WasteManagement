@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "938506353560-gdo9e3o044gf9m0iml3mne4g2t2eovkm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.icp.wastemanagementsystem",
+            "certificate_hash": "d9d2a596127f9625573e834e8b0063153ad4e65c"
+          }
+        },
+        {
           "client_id": "938506353560-b2id2pm0qqdu1t3qrbf899nh1g9bmauj.apps.googleusercontent.com",
           "client_type": 3
         }

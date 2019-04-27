@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-public class Stakeholders extends AppCompatActivity {
+public class StakeholdersActivity extends AppCompatActivity {
 
     private  Button mStudentButton;
     private Button mEssentialButton;
@@ -26,8 +26,7 @@ public class Stakeholders extends AppCompatActivity {
         mBigBenButton = findViewById(R.id.bigBenButton);
         mZoomlionButton = findViewById(R.id.zoomlionButton);
 
-        Intent openForm = getIntent();
-        String buttonType= openForm.getExtras().getString("buttonType");
+        String buttonType= getIntent().getExtras().getString("buttonType");
 
         if(buttonType.equals("signUp")){
             mEssentialButton.setEnabled(false);
@@ -35,7 +34,7 @@ public class Stakeholders extends AppCompatActivity {
             mZoomlionButton.setEnabled(false);
             mArkonoButton.setEnabled(false);
 
-            final Intent signUpFormIntent = new Intent(this, SignUpForm.class);
+            final Intent signUpFormIntent = new Intent(this, SignUpActivity.class);
             mStudentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -45,7 +44,7 @@ public class Stakeholders extends AppCompatActivity {
         }else if(buttonType.equals("signIn")){
             Button [] allButtons = {mStudentButton, mEssentialButton, mBigBenButton,
                                 mArkonoButton, mZoomlionButton};
-            final Intent signInButtonIntent = new Intent(this, SignInForm.class);
+            final Intent signInButtonIntent = new Intent(this, SignInActivity.class);
             for(Button button: allButtons){
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -56,4 +55,6 @@ public class Stakeholders extends AppCompatActivity {
             }
         }
     }
+
+
 }
