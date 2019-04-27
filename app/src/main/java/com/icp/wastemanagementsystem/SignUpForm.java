@@ -1,7 +1,9 @@
 package com.icp.wastemanagementsystem;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
 
 public class SignUpForm extends AppCompatActivity {
 
@@ -95,47 +98,68 @@ public class SignUpForm extends AppCompatActivity {
     }
 
 
-        private boolean isPasswordValid (String password){
-            return password.length() > 4;
-        }
+    private boolean isPasswordValid (String password){
+        return password.length() > 4;
+    }
 
-        private boolean isEmailValid (String email){
-            return email.contains("@");
-        }
+    private boolean isEmailValid (String email){
+        return email.contains("@");
+    }
 
-        private void createFirebaseUser() {
+    private void createFirebaseUser() {
 
-            String email = mEmailView.getText().toString();
-            String password = mPasswordView.getText().toString();
+        String email = mEmailView.getText().toString();
+        String password = mPasswordView.getText().toString();
 
-            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this,
-                new OnCompleteListener<AuthResult>() {
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this,
+            new OnCompleteListener<AuthResult>() {
 
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        if(!task.isSuccessful()){
-                            showErrorDialog("Registration attempt failed");
-                        } else {
-                            Intent intent = new Intent(SignUpForm.this, Navigation.class);
-                            finish();
-                            startActivity(intent);
-                        }
+                    if(!task.isSuccessful()){
+                        showErrorDialog("Registration attempt failed");
+                    } else {
+                        saveLogIn();
+                        Intent intent = new Intent(SignUpForm.this, Navigation.class);
+                        finish();
+                        startActivity(intent);
                     }
-                });
+                }
+            });
+    }
+
+
+    private void showErrorDialog ( String message )  {
+
+        new AlertDialog.Builder(this)
+                .setTitle("Oops")
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+
+    }
+
+
+    public void openSignInForm(View view){
+        Intent signInIntent = new Intent(this, SignInForm.class);
+        signInIntent.putExtra("buttonType", "signIn");
+        startActivity(signInIntent);
+    }
+
+    private void saveLogIn(){
+        SharedPreferences prefs = getSharedPreferences(SignInForm.PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor sharedEditor = prefs.edit();
+        sharedEditor.putString(SignInForm.KEY_EMAIL, mEmailView.getText().toString().trim());
+        sharedEditor.putString(SignInForm.KEY_PASSWORD, mPasswordView.getText().toString());
+        sharedEditor.putBoolean(SignInForm.KEY_REMEMBER, true);
+        sharedEditor.putBoolean(SignInForm.KEY_AUTOLOG,true);
+        if(!(prefs.getBoolean(SignInForm.KEY_LOGGED,false))){
+            sharedEditor.putBoolean(SignInForm.KEY_LOGGED,true);
         }
-
-
-        private void showErrorDialog ( String message )  {
-
-            new AlertDialog.Builder(this)
-                    .setTitle("Oops")
-                    .setMessage(message)
-                    .setPositiveButton(android.R.string.ok, null)
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
-
-        }
+        sharedEditor.apply();
+    }
 
 
 }

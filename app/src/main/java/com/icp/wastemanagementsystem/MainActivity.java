@@ -1,6 +1,8 @@
 package com.icp.wastemanagementsystem;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,6 +16,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences prefs = getSharedPreferences(SignInForm.PREF_NAME, Context.MODE_PRIVATE);
+        if(prefs.getBoolean(SignInForm.KEY_LOGGED,false)){
+            startActivity(new Intent(this, SignInForm.class));
+        }
         setContentView(R.layout.activity_main);
 
     }
