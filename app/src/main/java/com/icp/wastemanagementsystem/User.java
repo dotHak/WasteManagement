@@ -51,4 +51,6 @@ public class User {
     public void setBarcodeList(Map<Date, ArrayList> barcodeList) {
         mBarcodeList = barcodeList;
     }
+
+
 }
