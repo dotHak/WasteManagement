@@ -44,6 +44,7 @@
 
     <Button
         android:id="@+id/EssentialsButton"
+        android:background="@drawable/button_background"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -67,6 +68,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:background="@drawable/button_background"
         style="@style/Widget.AppCompat.Button.Colored"
         android:text="Arkono"
         app:layout_constraintEnd_toStartOf="@+id/guideline11"
@@ -85,6 +87,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@drawable/button_background"
         android:text="Big Ben"
         app:layout_constraintBottom_toTopOf="@+id/zoomlionButton"
         app:layout_constraintEnd_toStartOf="@+id/guideline11"
@@ -98,6 +101,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/button_background"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="24dp"
         style="@style/Widget.AppCompat.Button.Colored"
