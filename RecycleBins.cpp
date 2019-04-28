@@ -65,3 +65,13 @@ void RecycleBins::BinState() {
         cout<< " The bin has "<<BinBucket.capacity()- BinBucket.size() << " space left"<<endl;
     }
 }
+int main(){
+
+    RecycleBins Plasticbin1(" Library", 5);
+    Plasticbin1.BinState();
+    Plasticbin1.getBinBucket. add (29384958);
+
+
+
+    return 0;
+}
