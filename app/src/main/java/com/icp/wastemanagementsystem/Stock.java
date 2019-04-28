@@ -10,14 +10,22 @@ public class Stock {
     private int quantity;
 
     //default constructor
-    public Stock(){
-    }
-    //overloaded constructor
+    public Stock(){}
+
+    //overloaded constructor 1
     public Stock(String S_name, String S_type, double S_price, int S_quantity){
         this.name = S_name;
         this.type =S_type;
         this.price =S_price;
         this.quantity =S_quantity;
+    }
+    //overloaded constructor 2
+
+
+    public Stock(String name, String type, double price) {
+        this.name = name;
+        this.type = type;
+        this.price = price;
     }
 
     //getters
@@ -33,8 +41,6 @@ public class Stock {
     public int getQuantity() {
         return quantity;
     }
-
-
 
 
     //Setters
@@ -55,6 +61,7 @@ public class Stock {
         this.quantity -= quantity;
     }
 
+    //tostring
     @Override
     public String toString() {
         return "Stock{" +
@@ -67,10 +74,10 @@ public class Stock {
 
 
 
-    public static void main (String[] args){
+    //public static void main (String[] args){
         //Stock stock2 = new Stock("a", "b", 45, 56);
 
 
     }
-}
+
 
