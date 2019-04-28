@@ -42,3 +42,7 @@ target_link_libraries( # Specifies the target library.
         # Links the target library to the log library
         # included in the NDK.
         ${log-lib})
+
+set(CMAKE_CXX_STANDARD 14)
+
+add_executable(WasteManagementProject RecycleBins.cpp)
