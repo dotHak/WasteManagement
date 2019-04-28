@@ -5,33 +5,41 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/menu_home" />
+            android:id="@+id/nav_history"
+            android:icon="@drawable/history"
+            android:title="@string/menu_history" />
         <item
             android:id="@+id/nav_scan_barcode"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/icons_100"
             android:title="@string/scan_barcode_menu" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
+            android:id="@+id/nav_awards"
+            android:icon="@drawable/trophy"
+            android:title="@string/menu_ranks" />
         <item
-            android:id="@+id/nav_tools"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/menu_tools" />
+            android:id="@+id/nav_bins"
+            android:icon="@drawable/trash_filled"
+            android:title="@string/menu_bins" />
     </group>
 
     <item android:title="Process Balance">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="@string/menu_share" />
+                android:id="@+id/nav_arkono"
+                android:icon="@drawable/food_filled"
+                android:title="@string/arkono" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/menu_send" />
+                android:id="@+id/nav_bigBen"
+                android:icon="@drawable/seafood"
+                android:title="@string/bigben" />
+            <item
+                android:id="@+id/nav_essentials"
+                android:icon="@drawable/shop"
+                android:title="@string/essentials" />
+            <item
+                android:id="@+id/nav_zoomlion"
+                android:icon="@drawable/recycle_zoomlion"
+                android:title="@string/zoomlion" />
         </menu>
     </item>
 

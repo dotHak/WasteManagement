@@ -21,7 +21,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-
 public class SignUpActivity extends AppCompatActivity {
 
     private EditText mEmailView;
@@ -30,10 +29,13 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText mConfirmPasswordView;
     private Button mSignUpButton;
 
-    private DatabaseReference reff; //used to store data into firebase database
+    static FirebaseAuth mAuth;
+    static DatabaseReference mDatabaseReference;
 
-    private FirebaseAuth mAuth;
-    User user; //creates new user
+
+    private User mUser;
+    static String mUserId;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,22 +46,19 @@ public class SignUpActivity extends AppCompatActivity {
         mPasswordView = findViewById(R.id.signUpPasswordField);
         mConfirmPasswordView = findViewById(R.id.signupConfirmPasswordField);
         mSignUpButton = findViewById(R.id.sigupRegisterButton);
-        user = new User();
-        reff = FirebaseDatabase.getInstance().getReference().child("User");
+
+
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users");
+
         mSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               attemptRegistration();
-               String username = mUsernameView.getText().toString().trim(); //getting username entered
-               String email = mEmailView.getText().toString().trim(); //getting email entered
-
+                attemptRegistration();
             }
         });
         mAuth = FirebaseAuth.getInstance();
 
-
     }
-
 
     private void attemptRegistration() {
 
@@ -70,16 +69,16 @@ public class SignUpActivity extends AppCompatActivity {
         boolean cancel = false;
         View focusView = null;
 
-        if(TextUtils.isEmpty(confirmPassword)){
+        if (TextUtils.isEmpty(confirmPassword)) {
             mConfirmPasswordView.setError(getString(R.string.error_field_required));
             focusView = mConfirmPasswordView;
             cancel = true;
-        }if(!confirmPassword.equals(password)){
+        }
+        if (!confirmPassword.equals(password)) {
             mConfirmPasswordView.setError(getString(R.string.error_not_match_password));
             focusView = mConfirmPasswordView;
             cancel = true;
         }
-
 
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
@@ -97,9 +96,6 @@ public class SignUpActivity extends AppCompatActivity {
             cancel = true;
         }
 
-
-
-
         if (cancel) {
             focusView.requestFocus();
         } else {
@@ -108,12 +104,11 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-
-    private boolean isPasswordValid (String password){
+    private boolean isPasswordValid(String password) {
         return password.length() > 4;
     }
 
-    private boolean isEmailValid (String email){
+    private boolean isEmailValid(String email) {
         return email.contains("@");
     }
 
@@ -121,56 +116,56 @@ public class SignUpActivity extends AppCompatActivity {
 
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
+        String userName = mUsernameView.getText().toString().trim();
+        mUser = new User(userName, email, 0);
 
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this,
-            new OnCompleteListener<AuthResult>() {
+                new OnCompleteListener<AuthResult>() {
 
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
 
-                    if(!task.isSuccessful()){
-                        showErrorDialog("Registration attempt failed");
-                    } else {
-                        saveLogIn();
-                        Intent intent = new Intent(SignUpActivity.this, DashboardActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
+                        if (!task.isSuccessful()) {
+                            showErrorDialog("Registration attempt failed");
+                        } else {
+                            saveLogIn();
+                            mDatabaseReference.child(mAuth.getCurrentUser().getUid()).setValue(mUser);
+                            Intent intent = new Intent(SignUpActivity.this, DashboardActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        }
                     }
-                }
-            });
+                });
     }
 
 
-    private void showErrorDialog ( String message )  {
 
-        new AlertDialog.Builder(this)
-                .setTitle("Oops")
-                .setMessage(message)
-                .setPositiveButton(android.R.string.ok, null)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
+    private void showErrorDialog(String message) {
+
+        new AlertDialog.Builder(this).setTitle("Oops").setMessage(message).setPositiveButton(android.R.string.ok, null)
+                .setIcon(android.R.drawable.ic_dialog_alert).show();
 
     }
 
-
-    public void openSignInForm(View view){
+    public void openSignInForm(View view) {
         Intent signInIntent = new Intent(this, SignInActivity.class);
         signInIntent.putExtra("buttonType", "signIn");
         startActivity(signInIntent);
     }
 
-    private void saveLogIn(){
+    private void saveLogIn() {
         SharedPreferences prefs = getSharedPreferences(SignInActivity.PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor sharedEditor = prefs.edit();
+        mUserId = mAuth.getCurrentUser().getUid();
         sharedEditor.putString(SignInActivity.KEY_EMAIL, mEmailView.getText().toString().trim());
         sharedEditor.putString(SignInActivity.KEY_PASSWORD, mPasswordView.getText().toString());
-        sharedEditor.putBoolean(SignInActivity.KEY_REMEMBER, true);
-        sharedEditor.putBoolean(SignInActivity.KEY_AUTOLOG,true);
-        if(!(prefs.getBoolean(SignInActivity.KEY_LOGGED,false))){
-            sharedEditor.putBoolean(SignInActivity.KEY_LOGGED,true);
+        sharedEditor.putString(SignInActivity.KEY_USERNAME, mUsernameView.getText().toString().trim());
+        sharedEditor.putString(SignInActivity.KEY_USERID, mUserId);
+        sharedEditor.putBoolean(SignInActivity.KEY_AUTOLOG, true);
+        if (!(prefs.getBoolean(SignInActivity.KEY_LOGGED, false))) {
+            sharedEditor.putBoolean(SignInActivity.KEY_LOGGED, true);
         }
         sharedEditor.apply();
     }
-
 
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,14 +15,27 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class DashboardActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int TIME_INTERVAL = 2000;
     private long mBackPressed;
-
+    private TextView mUsernameView;
+    private TextView mEmailView;
+    private TextView mCreditView;
+    private SharedPreferences mSharedPreferences;
+    static FirebaseAuth mAuth;
+    static DatabaseReference mDatabaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +44,18 @@ public class DashboardActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
+        mSharedPreferences = getSharedPreferences(SignInActivity.PREF_NAME, Context.MODE_PRIVATE);
+
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users");
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        mEmailView=  headerView.findViewById(R.id.navEmailView);
+        mUsernameView = headerView.findViewById(R.id.navUsernameView);
+        mCreditView = headerView.findViewById(R.id.creditText);
+
+        mEmailView.setText(mSharedPreferences.getString(SignInActivity.KEY_EMAIL, "Email"));
+
+
         final Intent barcodeScanIntent = new Intent(this, BarcodeChoiceAcitivty.class);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,12 +64,26 @@ public class DashboardActivity extends AppCompatActivity
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        mDatabaseReference.child(mSharedPreferences.getString(SignInActivity.KEY_USERID, "")).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+               User user = dataSnapshot.getValue(User.class);
+               mUsernameView.setText(user.getUsername());
+               mCreditView.setText(Integer.toString(user.getCredit()));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     @Override
@@ -78,8 +118,7 @@ public class DashboardActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.logout) {
             Intent intent = new Intent(this, SignInActivity.class);
-            SharedPreferences prefs = getSharedPreferences(SignInActivity.PREF_NAME, Context.MODE_PRIVATE);
-            prefs.edit().putBoolean(SignInActivity.KEY_AUTOLOG,false).apply();
+            mSharedPreferences.edit().putBoolean(SignInActivity.KEY_AUTOLOG,false).apply();
             intent.putExtra("backOnExist", true);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
@@ -95,17 +134,21 @@ public class DashboardActivity extends AppCompatActivity
         // Handle dashboard view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
+        if (id == R.id.nav_history) {
             // Handle the camera action
         } else if (id == R.id.nav_scan_barcode) {
             startActivity(new Intent(this, BarcodeChoiceAcitivty.class));
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_bins) {
 
-        } else if (id == R.id.nav_tools) {
+        } else if (id == R.id.nav_awards) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_essentials) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_arkono) {
+
+        }else if (id == R.id.nav_zoomlion){
+
+        }else if (id == R.id.nav_bigBen){
 
         }
 
