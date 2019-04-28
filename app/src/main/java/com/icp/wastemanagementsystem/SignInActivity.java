@@ -19,7 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class SignInForm extends AppCompatActivity {
+public class SignInActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private EditText mEmailView;
@@ -29,12 +29,17 @@ public class SignInForm extends AppCompatActivity {
     SharedPreferences mSharedPreferences;
     SharedPreferences.Editor mSharedEditor;
 
+
     static final String PREF_NAME = "WasteLogPrefs";
     static final String KEY_REMEMBER= "rememberMe";
     static final String  KEY_EMAIL = "email";
     static  final String KEY_PASSWORD = "password";
     static final String KEY_LOGGED = "hasBeenLogged";
     static final String KEY_AUTOLOG = "autoLogIn";
+
+    private static final int TIME_INTERVAL = 2000;
+    private long mBackPressed;
+    private Boolean mEnableDoubleBackExist;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,7 +53,9 @@ public class SignInForm extends AppCompatActivity {
         mRememberMe = findViewById(R.id.rememberMe);
         mAuth = FirebaseAuth.getInstance();
 
-        if(mSharedPreferences.getBoolean(PREF_NAME, false)){
+        mEnableDoubleBackExist = getIntent().getBooleanExtra("backOnExist", false);
+
+        if(mSharedPreferences.getBoolean(KEY_REMEMBER, false)){
             mRememberMe.setChecked(true);
         }else{
             mRememberMe.setChecked(false);
@@ -57,21 +64,12 @@ public class SignInForm extends AppCompatActivity {
         mEmailView.setText(mSharedPreferences.getString(KEY_EMAIL, ""));
         mPasswordView.setText(mSharedPreferences.getString(KEY_PASSWORD,""));
 
-
-        if(mSharedPreferences.getBoolean(KEY_AUTOLOG, false)){
-            finish();
-            startActivity(new Intent(SignInForm.this, Navigation.class));
-        }
-
-
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 attemptLogin();
             }
         });
-
-
 
     }
 
@@ -96,8 +94,8 @@ public class SignInForm extends AppCompatActivity {
                     mLoginButton.setEnabled(true);
                 } else {
                     manageSharedPrefs();
-                    Intent intent = new Intent(SignInForm.this, Navigation.class);
-                    finish();
+                    Intent intent = new Intent(SignInActivity.this, DashboardActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
 
@@ -119,7 +117,7 @@ public class SignInForm extends AppCompatActivity {
     }
 
     public void openSignUpForm(View view){
-        Intent stakeholdersIntent = new Intent(this, SignUpForm.class);
+        Intent stakeholdersIntent = new Intent(this, SignUpActivity.class);
         stakeholdersIntent.putExtra("buttonType", "signUp");
         startActivity(stakeholdersIntent);
     }
@@ -140,6 +138,20 @@ public class SignInForm extends AppCompatActivity {
             mSharedEditor.remove(KEY_PASSWORD);
             mSharedEditor.remove(KEY_EMAIL);
             mSharedEditor.apply();
+        }
+    }
+
+    @Override
+    public void onBackPressed(){
+        if(mEnableDoubleBackExist) {
+            if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
+                super.onBackPressed();
+            } else {
+                Toast.makeText(getBaseContext(), "Press BACK again to exit", Toast.LENGTH_SHORT).show();
+            }
+            mBackPressed = System.currentTimeMillis();
+        }else{
+            super.onBackPressed();
         }
     }
 

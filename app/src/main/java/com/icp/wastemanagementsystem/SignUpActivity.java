@@ -18,9 +18,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
-public class SignUpForm extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity {
 
     private EditText mEmailView;
     private TextInputEditText mUsernameView;
@@ -28,7 +30,10 @@ public class SignUpForm extends AppCompatActivity {
     private EditText mConfirmPasswordView;
     private Button mSignUpButton;
 
+    private DatabaseReference reff; //used to store data into firebase database
+
     private FirebaseAuth mAuth;
+    User user; //creates new user
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,14 +44,20 @@ public class SignUpForm extends AppCompatActivity {
         mPasswordView = findViewById(R.id.signUpPasswordField);
         mConfirmPasswordView = findViewById(R.id.signupConfirmPasswordField);
         mSignUpButton = findViewById(R.id.sigupRegisterButton);
-
+        user = new User();
+        reff = FirebaseDatabase.getInstance().getReference().child("User");
         mSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                attemptRegistration();
+               String username = mUsernameView.getText().toString().trim(); //getting username entered
+               String email = mEmailView.getText().toString().trim(); //getting email entered
+
             }
         });
         mAuth = FirebaseAuth.getInstance();
+
+
     }
 
 
@@ -121,8 +132,8 @@ public class SignUpForm extends AppCompatActivity {
                         showErrorDialog("Registration attempt failed");
                     } else {
                         saveLogIn();
-                        Intent intent = new Intent(SignUpForm.this, Navigation.class);
-                        finish();
+                        Intent intent = new Intent(SignUpActivity.this, DashboardActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     }
                 }
@@ -143,20 +154,20 @@ public class SignUpForm extends AppCompatActivity {
 
 
     public void openSignInForm(View view){
-        Intent signInIntent = new Intent(this, SignInForm.class);
+        Intent signInIntent = new Intent(this, SignInActivity.class);
         signInIntent.putExtra("buttonType", "signIn");
         startActivity(signInIntent);
     }
 
     private void saveLogIn(){
-        SharedPreferences prefs = getSharedPreferences(SignInForm.PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(SignInActivity.PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor sharedEditor = prefs.edit();
-        sharedEditor.putString(SignInForm.KEY_EMAIL, mEmailView.getText().toString().trim());
-        sharedEditor.putString(SignInForm.KEY_PASSWORD, mPasswordView.getText().toString());
-        sharedEditor.putBoolean(SignInForm.KEY_REMEMBER, true);
-        sharedEditor.putBoolean(SignInForm.KEY_AUTOLOG,true);
-        if(!(prefs.getBoolean(SignInForm.KEY_LOGGED,false))){
-            sharedEditor.putBoolean(SignInForm.KEY_LOGGED,true);
+        sharedEditor.putString(SignInActivity.KEY_EMAIL, mEmailView.getText().toString().trim());
+        sharedEditor.putString(SignInActivity.KEY_PASSWORD, mPasswordView.getText().toString());
+        sharedEditor.putBoolean(SignInActivity.KEY_REMEMBER, true);
+        sharedEditor.putBoolean(SignInActivity.KEY_AUTOLOG,true);
+        if(!(prefs.getBoolean(SignInActivity.KEY_LOGGED,false))){
+            sharedEditor.putBoolean(SignInActivity.KEY_LOGGED,true);
         }
         sharedEditor.apply();
     }

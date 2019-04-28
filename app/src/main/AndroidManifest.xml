@@ -21,7 +21,7 @@
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
         <activity
-            android:name=".Navigation"
+            android:name=".DashboardActivity"
             android:label="@string/title_activity_navigation"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity">
@@ -38,21 +38,18 @@
             android:label="Set Barcode Options"
             android:theme="@style/AppTheme"/>
         <activity
-            android:name=".SignUpForm"
+            android:name=".SignUpActivity"
             android:label="Sign Up Form"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".Stakeholders"
+            android:name=".StakeholdersActivity"
             android:label="Stakeholders"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".SignInForm"
+            android:name=".SignInActivity"
             android:label="Sign In Form"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name=".Dashboard"
-            android:label="Dashboard"
-            android:theme="@style/AppTheme" />
+
     </application>
 
 </manifest>
