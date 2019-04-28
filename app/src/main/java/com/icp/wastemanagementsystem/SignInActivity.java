@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class SignInActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
+    static FirebaseAuth mAuth;
     private EditText mEmailView;
     private EditText mPasswordView;
     private Button mLoginButton;
@@ -36,6 +36,8 @@ public class SignInActivity extends AppCompatActivity {
     static  final String KEY_PASSWORD = "password";
     static final String KEY_LOGGED = "hasBeenLogged";
     static final String KEY_AUTOLOG = "autoLogIn";
+    static final String KEY_USERNAME = "userName";
+    static final String KEY_USERID= "userId";
 
     private static final int TIME_INTERVAL = 2000;
     private long mBackPressed;
@@ -70,7 +72,6 @@ public class SignInActivity extends AppCompatActivity {
                 attemptLogin();
             }
         });
-
     }
 
 
@@ -126,6 +127,7 @@ public class SignInActivity extends AppCompatActivity {
         if (mRememberMe.isChecked()){
             mSharedEditor.putString(KEY_EMAIL, mEmailView.getText().toString().trim());
             mSharedEditor.putString(KEY_PASSWORD, mPasswordView.getText().toString());
+            mSharedEditor.putString(KEY_USERID, mAuth.getCurrentUser().getUid());
             mSharedEditor.putBoolean(KEY_REMEMBER, true);
             mSharedEditor.putBoolean(KEY_AUTOLOG,true);
             if(!(mSharedPreferences.getBoolean(KEY_LOGGED,false))){
@@ -134,9 +136,8 @@ public class SignInActivity extends AppCompatActivity {
             mSharedEditor.apply();
 
         }else{
+            mSharedEditor.putBoolean(KEY_AUTOLOG, false);
             mSharedEditor.putBoolean(KEY_REMEMBER, false);
-            mSharedEditor.remove(KEY_PASSWORD);
-            mSharedEditor.remove(KEY_EMAIL);
             mSharedEditor.apply();
         }
     }

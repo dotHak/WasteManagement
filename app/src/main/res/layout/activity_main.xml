@@ -28,6 +28,7 @@
     <Button
         android:id="@+id/signUpButton"
         style="@style/Widget.AppCompat.Button.Colored"
+        android:background="@drawable/button_background"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

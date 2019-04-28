@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         SharedPreferences prefs = getSharedPreferences(SignInActivity.PREF_NAME, Context.MODE_PRIVATE);
         if(prefs.getBoolean(SignInActivity.KEY_AUTOLOG, false)){
-            Intent intent = new Intent(this, DashboardActivity.class);
+            final Intent intent = new Intent(this, DashboardActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }else if(prefs.getBoolean(SignInActivity.KEY_LOGGED,false)){

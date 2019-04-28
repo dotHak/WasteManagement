@@ -1,15 +1,27 @@
 package com.icp.wastemanagementsystem;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.vision.barcode.Barcode;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Main activity demonstrating how to pass extra parameters to an activity that
@@ -22,6 +34,12 @@ public class BarcodeChoiceAcitivty extends AppCompatActivity implements View.OnC
     private CompoundButton useFlash;
     private TextView statusMessage;
     private TextView barcodeValue;
+    private Button mClaimCredit;
+    private Button mClose;
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
+    private String mUserID;
 
     private static final int RC_BARCODE_CAPTURE = 9001;
     private static final String TAG = "BarcodeMain";
@@ -37,9 +55,72 @@ public class BarcodeChoiceAcitivty extends AppCompatActivity implements View.OnC
         autoFocus = (CompoundButton) findViewById(R.id.auto_focus);
         useFlash = (CompoundButton) findViewById(R.id.use_flash);
 
+        mUserID = getSharedPreferences(SignInActivity.PREF_NAME, Context.MODE_PRIVATE)
+                .getString(SignInActivity.KEY_USERID, "");
+
+
         findViewById(R.id.read_barcode).setOnClickListener(this);
+        mClaimCredit = findViewById(R.id.claimCreditButton);
+        mClose = findViewById(R.id.closeButton);
+        mClaimCredit.setEnabled(false);
+        mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference();
+
+
+        final Intent dashboardIntent = new Intent(this, DashboardActivity.class);
+        mClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                startActivity(dashboardIntent);
+            }
+        });
+
+
+        mClaimCredit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mDatabaseReference.child("users").child(mUserID).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                       User user = dataSnapshot.getValue(User.class);
+                       user.updateList(barcodeValue.getText().toString().trim());
+                        mDatabaseReference.child("users").child(mUserID).setValue(user)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        finish();
+                                        startActivity(dashboardIntent);
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        showErrorDialog("Update failed");
+                                    }
+                                });
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.w("WasteManagement", databaseError.toException());
+                    }
+                });
+
+
+            }
+        });
     }
 
+    private void showErrorDialog(String message) {
+
+        new AlertDialog.Builder(this).setTitle("Update Failure").setMessage(message).setPositiveButton(android.R.string.ok, null)
+                .setIcon(android.R.drawable.ic_dialog_alert).show();
+
+    }
     /**
      * Called when a view has been clicked.
      *
@@ -88,10 +169,9 @@ public class BarcodeChoiceAcitivty extends AppCompatActivity implements View.OnC
                     Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
                     statusMessage.setText(R.string.barcode_success);
                     barcodeValue.setText(barcode.displayValue);
-                    Log.d(TAG, "Barcode read: " + barcode.displayValue);
+                    mClaimCredit.setEnabled(true);
                 } else {
                     statusMessage.setText(R.string.barcode_failure);
-                    Log.d(TAG, "No barcode captured, intent data is null");
                 }
             } else {
                 statusMessage.setText(String.format(getString(R.string.barcode_error),
