@@ -9,9 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.icp.wastemanagementsystem.dummy.DummyContent;
 import com.icp.wastemanagementsystem.dummy.DummyContent.DummyItem;
+
+import java.util.ArrayList;
 
 /**
  * A fragment representing a list of Items.
@@ -58,19 +62,34 @@ public class EssentialsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_essentials_list, container, false);
 
+        ArrayList<Stock> EssentialItems= new ArrayList<>();
+        EssentialItems = getAllStocks.getEssentialstocks().getStock();
+        Object[] EssentialMenu = EssentialItems.toArray();
+
+        ListView listView = (ListView)view.findViewById(R.id.list);
+
+        //set adapter
+        ArrayAdapter<Object> listViewAdapter =new ArrayAdapter<Object>(getActivity(),
+                android.R.layout.simple_list_item_1,
+                EssentialMenu);
+        listView.setAdapter(listViewAdapter);
+
+
+
         // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new MyEssentialsRecyclerViewAdapter(DummyContent.ITEMS, mListener));
-        }
+        //if (view instanceof RecyclerView) {
+           // Context context = view.getContext();
+           // RecyclerView recyclerView = (RecyclerView) view;
+            //if (mColumnCount <= 1) {
+             //   recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            //} else {
+             //   recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+            //}
+           // recyclerView.setAdapter(new MyEssentialsRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+        //}
         return view;
     }
+
 
 
     @Override

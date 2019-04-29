@@ -65,7 +65,7 @@ public class MyArkonoRecyclerViewAdapter extends RecyclerView.Adapter<MyArkonoRe
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
+            mIdView = (TextView) view.findViewById(R.id.EssentialList);
             mContentView = (TextView) view.findViewById(R.id.content);
         }
 

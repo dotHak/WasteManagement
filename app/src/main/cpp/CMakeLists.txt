@@ -45,4 +45,3 @@ target_link_libraries( # Specifies the target library.
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(WasteManagementProject RecycleBins.cpp)
