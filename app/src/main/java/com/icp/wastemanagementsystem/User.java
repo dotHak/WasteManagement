@@ -40,11 +40,11 @@ public class User {
 
         } else if (mBarcodeList.containsKey(today)) {
             mBarcodeList.get(today).add(barcode);
-            mCredit +=20;
+            mCredit += 20;
         } else {
             mBarcodeList.put(today, new ArrayList<String>());
             mBarcodeList.get(today).add(barcode);
-            mCredit +=20;
+            mCredit += 20;
         }
     }
 

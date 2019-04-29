@@ -11,14 +11,14 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class ArkonoFragment extends Fragment {
+public class ZoomlionFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_arkono, container, false);
-        ArrayList<Stock> arkonoList = getAllStocks.getAkornorStocks().getStock();
-        ArkonoStockAdapter adapter = new ArkonoStockAdapter(getActivity(),R.layout.stock_item, arkonoList);
-        ListView listView = view.findViewById(R.id.arkonoListView);
+        View view = inflater.inflate(R.layout.fragment_zoomlion, container, false);
+        ArrayList<Stock> zoomlion = getAllStocks.getZoomLionStocks().getStock();
+        ArkonoStockAdapter adapter = new ArkonoStockAdapter(getActivity(),R.layout.stock_item, zoomlion);
+        ListView listView = view.findViewById(R.id.zoomListView);
         listView.setAdapter(adapter);
         return view;
     }

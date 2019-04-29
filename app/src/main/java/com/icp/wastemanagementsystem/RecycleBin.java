@@ -1,6 +1,5 @@
-package com.icp.wastemanagementsystem;
-///// Lisa Princesse Ikirezi
 
+package com.icp.wastemanagementsystem;
 public class RecycleBin <T> {
 
     // instance variables

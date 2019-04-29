@@ -11,14 +11,14 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class ArkonoFragment extends Fragment {
+public class BigbenFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_arkono, container, false);
-        ArrayList<Stock> arkonoList = getAllStocks.getAkornorStocks().getStock();
-        ArkonoStockAdapter adapter = new ArkonoStockAdapter(getActivity(),R.layout.stock_item, arkonoList);
-        ListView listView = view.findViewById(R.id.arkonoListView);
+        View view = inflater.inflate(R.layout.fragment_bigben, container, false);
+        ArrayList<Stock> bigben = getAllStocks.getBigBenStocks().getStock();
+        ArkonoStockAdapter adapter = new ArkonoStockAdapter(getActivity(),R.layout.stock_item, bigben);
+        ListView listView = view.findViewById(R.id.bigBenListView);
         listView.setAdapter(adapter);
         return view;
     }

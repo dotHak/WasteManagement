@@ -8,6 +8,7 @@
             android:id="@+id/nav_history"
             android:icon="@drawable/history"
             android:title="@string/menu_history" />
+
         <item
             android:id="@+id/nav_scan_barcode"
             android:icon="@drawable/icons_100"
@@ -20,27 +21,26 @@
             android:id="@+id/nav_bins"
             android:icon="@drawable/trash_filled"
             android:title="@string/menu_bins" />
+        <item
+            android:id="@+id/nav_arkono"
+            android:icon="@drawable/food_filled"
+            android:title="@string/arkono" />
+        <item
+            android:id="@+id/nav_bigBen"
+            android:icon="@drawable/seafood"
+            android:title="@string/bigben" />
+        <item
+            android:id="@+id/nav_essentials"
+            android:icon="@drawable/shop"
+            android:title="@string/essentials" />
+        <item
+            android:id="@+id/nav_zoomlion"
+            android:icon="@drawable/recycle_zoomlion"
+            android:title="@string/zoomlion" />
+        <item
+            android:id="@+id/nav_notifications"
+            android:icon="@drawable/recycle_zoomlion"
+            android:title="@string/notification" />
+
     </group>
-
-    <item android:title="Process Balance">
-        <menu>
-            <item
-                android:id="@+id/nav_arkono"
-                android:icon="@drawable/food_filled"
-                android:title="@string/arkono" />
-            <item
-                android:id="@+id/nav_bigBen"
-                android:icon="@drawable/seafood"
-                android:title="@string/bigben" />
-            <item
-                android:id="@+id/nav_essentials"
-                android:icon="@drawable/shop"
-                android:title="@string/essentials" />
-            <item
-                android:id="@+id/nav_zoomlion"
-                android:icon="@drawable/recycle_zoomlion"
-                android:title="@string/zoomlion" />
-        </menu>
-    </item>
-
 </menu>
