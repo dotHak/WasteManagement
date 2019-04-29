@@ -47,17 +47,16 @@ public class SignUpActivity extends AppCompatActivity {
         mConfirmPasswordView = findViewById(R.id.signupConfirmPasswordField);
         mSignUpButton = findViewById(R.id.sigupRegisterButton);
 
-
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users");
+        mAuth = FirebaseAuth.getInstance();
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
         mSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
+
             public void onClick(View v) {
                 attemptRegistration();
             }
-        });
-        mAuth = FirebaseAuth.getInstance();
-
+            });
     }
 
     private void attemptRegistration() {
@@ -99,6 +98,7 @@ public class SignUpActivity extends AppCompatActivity {
         if (cancel) {
             focusView.requestFocus();
         } else {
+            saveLogIn();
             createFirebaseUser();
 
         }
@@ -126,10 +126,10 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if (!task.isSuccessful()) {
-                            showErrorDialog("Registration attempt failed");
+                            showErrorDialog("Registration attempt failed","Oops");
                         } else {
                             saveLogIn();
-                            mDatabaseReference.child(mAuth.getCurrentUser().getUid()).setValue(mUser);
+                            mDatabaseReference.child("users").child(mAuth.getCurrentUser().getUid()).setValue(mUser);
                             Intent intent = new Intent(SignUpActivity.this, DashboardActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
@@ -140,9 +140,9 @@ public class SignUpActivity extends AppCompatActivity {
 
 
 
-    private void showErrorDialog(String message) {
+    private void showErrorDialog(String message, String title) {
 
-        new AlertDialog.Builder(this).setTitle("Oops").setMessage(message).setPositiveButton(android.R.string.ok, null)
+        new AlertDialog.Builder(this).setTitle(title).setMessage(message).setPositiveButton(android.R.string.ok, null)
                 .setIcon(android.R.drawable.ic_dialog_alert).show();
 
     }

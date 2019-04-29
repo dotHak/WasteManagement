@@ -45,7 +45,6 @@ public class DashboardActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
         mSharedPreferences = getSharedPreferences(SignInActivity.PREF_NAME, Context.MODE_PRIVATE);
-
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users");
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
@@ -74,8 +73,9 @@ public class DashboardActivity extends AppCompatActivity
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                User user = dataSnapshot.getValue(User.class);
+               
                mUsernameView.setText(user.getUsername());
-               mCreditView.setText(Integer.toString(user.getCredit()));
+               mCreditView.setText(new Integer(user.getCredit()).toString());
             }
 
             @Override
@@ -83,6 +83,13 @@ public class DashboardActivity extends AppCompatActivity
 
             }
         });
+
+        if(savedInstanceState == null){
+            getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_content,
+                    new HistoryFragment()).commit();
+            navigationView.setCheckedItem(R.id.nav_history);
+        }
+
 
     }
 
@@ -134,22 +141,32 @@ public class DashboardActivity extends AppCompatActivity
         // Handle dashboard view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_history) {
-            // Handle the camera action
+        if (id == R.id.nav_notifications) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_content,
+                    new NotificationFragment()).commit();
         } else if (id == R.id.nav_scan_barcode) {
             startActivity(new Intent(this, BarcodeChoiceAcitivty.class));
         } else if (id == R.id.nav_bins) {
-
+            getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_content,
+                    new BinsFragment()).commit();
         } else if (id == R.id.nav_awards) {
-
+            getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_content,
+                    new AwardsFragment()).commit();
         } else if (id == R.id.nav_essentials) {
-
+            getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_content,
+                    new EssentialsFragment()).commit();
         } else if (id == R.id.nav_arkono) {
-
+            getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_content,
+                    new ArkonoFragment()).commit();
         }else if (id == R.id.nav_zoomlion){
-
+            getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_content,
+                    new ZoomlionFragment()).commit();
         }else if (id == R.id.nav_bigBen){
-
+            getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_content,
+                    new BigbenFragment()).commit();
+        }else if(id == R.id.nav_history){
+            getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_content,
+                    new HistoryFragment()).commit();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

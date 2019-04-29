@@ -1,4 +1,4 @@
-///// Lisa Princesse Ikirezi
+package com.icp.wastemanagementsystem;///// Lisa Princesse Ikirezi
 
 public class RecycleBin <T> {
 

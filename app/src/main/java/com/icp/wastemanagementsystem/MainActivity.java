@@ -12,9 +12,9 @@ public class MainActivity extends AppCompatActivity {
     private static final int TIME_INTERVAL = 2000;
     private long mBackPressed;
 
-    static {
-        System.loadLibrary("native-lib");
-    }
+//    static {
+//        System.loadLibrary("native-lib");
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
