@@ -1,3 +1,4 @@
+package com.icp.wastemanagementsystem;
 ///// Lisa Princesse Ikirezi
 
 public class RecycleBin <T> {
@@ -132,6 +133,18 @@ public class RecycleBin <T> {
         System.out.println();
 
         Bin1.DisplayElementsInBin();
+
+        RecycleBin <Integer> Bin2= new RecycleBin<>(" Engineering block", 10);
+        Bin2.addElementToBin(89392021);
+        Bin2.addElementToBin(12392021);
+
+        Bin2.BinState();
+
+        RecycleBin <Integer> Bin3= new RecycleBin<>(" Research Building", 20);
+
+        Bin3.BinState();
+
+
 
 
 
