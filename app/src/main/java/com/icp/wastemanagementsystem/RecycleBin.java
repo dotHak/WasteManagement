@@ -114,10 +114,22 @@ public class RecycleBin <T> {
     }
 
 
+    public void  emptyTheBin() {
+        for (T e : this.getBinBucket()) {
+
+            e = null;
+
+
+            System.out.println(e);
+        }
+
+        ElementsInBin = 0;
+    }
 
 
 
-    public  static void main ( String[] args){
+
+        public  static void main ( String[] args){
 
         RecycleBin <Integer> Bin1= new RecycleBin<>(" Library", 20);
         Bin1.addElementToBin(56672021);
