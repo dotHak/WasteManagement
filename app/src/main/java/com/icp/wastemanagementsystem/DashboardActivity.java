@@ -86,8 +86,8 @@ public class DashboardActivity extends AppCompatActivity
 
         if(savedInstanceState == null){
             getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_content,
-                    new HistoryFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_history);
+                    new AwardsFragment()).commit();
+            navigationView.setCheckedItem(R.id.nav_awards);
         }
 
 
@@ -164,9 +164,6 @@ public class DashboardActivity extends AppCompatActivity
         }else if (id == R.id.nav_bigBen){
             getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_content,
                     new BigbenFragment()).commit();
-        }else if(id == R.id.nav_history){
-            getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_content,
-                    new HistoryFragment()).commit();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

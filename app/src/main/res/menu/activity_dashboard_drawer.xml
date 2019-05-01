@@ -4,10 +4,6 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_history"
-            android:icon="@drawable/history"
-            android:title="@string/menu_history" />
 
         <item
             android:id="@+id/nav_scan_barcode"

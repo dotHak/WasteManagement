@@ -58,7 +58,14 @@ public class Stock {
     }
 
     public void setQuantity(int quantity) {
-        this.quantity -= quantity;
+        int currentquanitity = this.quantity;
+         if (quantity < this.quantity && this.quantity !=0 ){
+             this.quantity -= quantity;
+         }
+         else {
+             this.quantity = currentquanitity;
+         }
+
     }
 
     //tostring
