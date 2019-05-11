@@ -38,7 +38,7 @@ public class AwardsAdapter extends ArrayAdapter<User> {
 
         userNameView.setText(userName);
         emailView.setText(email);
-        creditView.setText(new Integer(credit).toString());
+        creditView.setText(new Double(credit * 0.01).toString());
         rankView.setText(new Integer(position + 1 ).toString());
 
         return convertView;

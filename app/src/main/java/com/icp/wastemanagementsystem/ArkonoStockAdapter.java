@@ -39,7 +39,9 @@ public class ArkonoStockAdapter extends ArrayAdapter<Stock> {
         TextView itemPrice = convertView.findViewById(R.id.itemPrice);
         TextView itemQuantity = convertView.findViewById(R.id.itemQuantity);
         TextView itemType = convertView.findViewById(R.id.itemType);
+        TextView listNumber = convertView.findViewById(R.id.stockListNumber);
 
+        listNumber.setText(new Integer(position +1).toString());
         itemName.setText(name);
         itemPrice.setText(new Double(price).toString());
         itemType.setText(type);

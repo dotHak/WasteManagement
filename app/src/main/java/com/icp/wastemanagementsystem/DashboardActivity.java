@@ -90,7 +90,7 @@ public class DashboardActivity extends AppCompatActivity
                User user = dataSnapshot.getValue(User.class);
                
                mUsernameView.setText(user.getUsername());
-               mCreditView.setText(new Integer(user.getCredit()).toString());
+               mCreditView.setText(new Double(user.getCredit() * 0.01).toString());
             }
 
             @Override
