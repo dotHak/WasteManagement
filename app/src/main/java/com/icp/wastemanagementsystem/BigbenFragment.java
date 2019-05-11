@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -22,6 +21,7 @@ public class BigbenFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bigben, container, false);
+        getActivity().setTitle("Big Ben Stocks");
         bigBenList= getAllStocks.getBigBenStocks().getStock();
         ArkonoStockAdapter adapter = new ArkonoStockAdapter(getActivity(),R.layout.stock_item, bigBenList);
         listView = view.findViewById(R.id.bigBenListView);
@@ -34,6 +34,7 @@ public class BigbenFragment extends Fragment {
                 intent.putExtra("quantity", bigBenList.get(position).getQuantity());
                 intent.putExtra("price", bigBenList.get(position).getPrice());
                 intent.putExtra("position", position);
+                intent.putExtra("type", bigBenList.get(position).getType());
                 startActivityForResult(intent,1);
             }
         });
@@ -51,9 +52,7 @@ public class BigbenFragment extends Fragment {
                 ArkonoStockAdapter adapter = new ArkonoStockAdapter(getActivity(),R.layout.stock_item, bigBenList);
                 listView.setAdapter(adapter);
             }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(getActivity(), "Check the quanity", Toast.LENGTH_SHORT).show();
-            }
+
         }
     }
 }

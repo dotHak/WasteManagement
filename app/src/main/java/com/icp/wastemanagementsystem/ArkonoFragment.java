@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -24,6 +23,7 @@ public class ArkonoFragment extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_arkono, container, false);
         arkonoList = getAllStocks.getAkornorStocks().getStock();
+        getActivity().setTitle("Arkono Stocks");
         ArkonoStockAdapter adapter = new ArkonoStockAdapter(getActivity(),R.layout.stock_item, arkonoList);
         listView = view.findViewById(R.id.arkonoListView);
         listView.setAdapter(adapter);
@@ -36,6 +36,7 @@ public class ArkonoFragment extends Fragment{
                 intent.putExtra("quantity", arkonoList.get(position).getQuantity());
                 intent.putExtra("price", arkonoList.get(position).getPrice());
                 intent.putExtra("position", position);
+                intent.putExtra("type", arkonoList.get(position).getType());
                 startActivityForResult(intent,1);
             }
         });
@@ -53,9 +54,7 @@ public class ArkonoFragment extends Fragment{
                 ArkonoStockAdapter adapter = new ArkonoStockAdapter(getActivity(),R.layout.stock_item, arkonoList);
                 listView.setAdapter(adapter);
             }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(getActivity(), "Check the quanity", Toast.LENGTH_SHORT).show();
-            }
+
         }
     }
 }

@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -22,7 +21,8 @@ public class ZoomlionFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_zoomlion, container, false);
-       ZoomlionList= getAllStocks.getZoomLionStocks().getStock();
+        getActivity().setTitle("Zoomlion");
+        ZoomlionList= getAllStocks.getZoomLionStocks().getStock();
         ArkonoStockAdapter adapter = new ArkonoStockAdapter(getActivity(),R.layout.stock_item, ZoomlionList);
         listView = view.findViewById(R.id.zoomListView);
         listView.setAdapter(adapter);
@@ -34,6 +34,7 @@ public class ZoomlionFragment extends Fragment {
                 intent.putExtra("quantity", ZoomlionList.get(position).getQuantity());
                 intent.putExtra("price", ZoomlionList.get(position).getPrice());
                 intent.putExtra("position", position);
+                intent.putExtra("type", ZoomlionList.get(position).getType());
                 startActivityForResult(intent,1);
             }
         });
@@ -51,9 +52,7 @@ public class ZoomlionFragment extends Fragment {
                 ArkonoStockAdapter adapter = new ArkonoStockAdapter(getActivity(),R.layout.stock_item, ZoomlionList);
                 listView.setAdapter(adapter);
             }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(getActivity(), "Check the quanity", Toast.LENGTH_SHORT).show();
-            }
+
         }
     }
 }

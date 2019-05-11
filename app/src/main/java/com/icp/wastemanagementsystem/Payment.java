@@ -1,6 +1,7 @@
 package com.icp.wastemanagementsystem;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -36,30 +38,36 @@ public class Payment extends AppCompatActivity {
         final double price = getIntent().getDoubleExtra("price", 0 );
         final int position = getIntent().getIntExtra("position",0 );
         quantity = getIntent().getIntExtra("quantity",0);
+        final String type = getIntent().getStringExtra("type");
         mNameValue.setText(getIntent().getStringExtra("name"));
         mQuantityValue.setText(Integer.toString(quantity));
+
+        if(quantity == 0){
+            mQuantityEntered.setEnabled(false);
+        }
+
 
         mMakePayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Intent intent = new Intent();
                 quantity = getIntent().getIntExtra("quantity" ,0);
-                if(Integer.parseInt(mQuantityEntered.getText().toString()) > quantity){
-                    setResult(Activity.RESULT_CANCELED, intent);
-                    finish();
+                final int enteredQuantity = !(type.equals("service")) ? Integer.parseInt(mQuantityEntered.getText().toString() ) : 1;
+                if( enteredQuantity  > quantity && !(type.equals("service"))){
+                    showErrorDialog("Check the quantity", "Inadequate Quantity");
                 }else{
                     databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                             .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             User user = dataSnapshot.getValue(User.class);
-                            if(user.getCredit()*.01 < Integer.parseInt(mQuantityEntered.getText().toString() )* price ){
-                                setResult(Activity.RESULT_CANCELED, intent);
-                                finish();
+                            if(user.getCredit()*.01 < enteredQuantity * price ){
+                                showErrorDialog("Credit not enough", "Insufficient Credit");
                             }else{
-                                user.setCredit((int)(user.getCredit() - Integer.parseInt(mQuantityEntered.getText().toString() )* price*100));
+                                Toast.makeText(getBaseContext(), "Payment successful", Toast.LENGTH_SHORT).show();
+                                user.setCredit((int)(user.getCredit() - enteredQuantity* price*100));
                                 databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
-                                intent.putExtra("stockQuant", Integer.parseInt(mQuantityEntered.getText().toString() ));
+                                intent.putExtra("stockQuant", enteredQuantity );
                                 intent.putExtra("position", position);
                                 setResult(Activity.RESULT_OK, intent);
                                 finish();
@@ -68,12 +76,20 @@ public class Payment extends AppCompatActivity {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                            showErrorDialog("Error occurred, check internet connection", "Processing Failure");
                         }
                     });
                 }
             }
         });
+
+
+    }
+
+    private void showErrorDialog(String message, String title) {
+
+        new AlertDialog.Builder(this).setTitle(title).setMessage(message).setPositiveButton(android.R.string.ok, null)
+                .setIcon(android.R.drawable.ic_dialog_alert).show();
 
     }
 }

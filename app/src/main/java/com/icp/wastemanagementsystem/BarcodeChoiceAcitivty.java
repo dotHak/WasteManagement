@@ -93,15 +93,19 @@ public class BarcodeChoiceAcitivty extends AppCompatActivity implements View.OnC
                        boolean isMatched = false;
                        for(DataSnapshot dsp : dataSnapshot.getChildren()){
                            User tempUser = dsp.getValue(User.class);
-                           Map <String, List<String>>barcodeList = tempUser.getBarcodeList();
-                           for(Map.Entry<String, List<String>> entry: barcodeList.entrySet()){
-                               ArrayList<String> list = (ArrayList<String>) entry.getValue();
-                               if(list.contains(barcodeValue.getText().toString().trim())){
-                                   isMatched = true;
-                                   break;
+                           Map <String, List<String>> barcodeList = tempUser.getBarcodeList();
+                           if(barcodeList != null){
+                               for(Map.Entry<String, List<String>> entry: barcodeList.entrySet()){
+                                   ArrayList<String> list = (ArrayList<String>) entry.getValue();
+                                   if(list.contains(barcodeValue.getText().toString().trim())){
+                                       isMatched = true;
+                                       break;
+                                   }
                                }
                            }
                        }
+
+
                        if(!isMatched) {
                            user.updateList(barcodeValue.getText().toString().trim());
 

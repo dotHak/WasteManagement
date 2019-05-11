@@ -18,8 +18,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -64,6 +67,7 @@ public class SignUpActivity extends AppCompatActivity {
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
         String confirmPassword = mConfirmPasswordView.getText().toString();
+        final String userName = mUsernameView.getText().toString().trim();
 
         boolean cancel = false;
         View focusView = null;
@@ -95,11 +99,41 @@ public class SignUpActivity extends AppCompatActivity {
             cancel = true;
         }
 
+        if(TextUtils.isEmpty(userName)){
+            mUsernameView.setError("This field is required");
+            focusView = mUsernameView;
+            cancel = true;
+        }
+
         if (cancel) {
             focusView.requestFocus();
         } else {
-            saveLogIn();
-            createFirebaseUser();
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users");
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    boolean isMatched = false;
+                    for(DataSnapshot dsp: dataSnapshot.getChildren()){
+                        User tempUser = dsp.getValue(User.class);
+                        if(tempUser.getUsername().equals(userName)){
+                            isMatched =true;
+                            break;
+                        }
+                    }
+
+                    if(!(isMatched)){
+                        createFirebaseUser();
+                    }else{
+                        mUsernameView.setError("Username already exists");
+                        mUsernameView.requestFocus();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    showErrorDialog("Resgiration attemp failed, check internet connection!", "Error");
+                }
+            });
 
         }
     }
@@ -117,6 +151,7 @@ public class SignUpActivity extends AppCompatActivity {
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
         String userName = mUsernameView.getText().toString().trim();
+
         mUser = new User(userName, email, 0);
 
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this,
@@ -167,5 +202,4 @@ public class SignUpActivity extends AppCompatActivity {
         }
         sharedEditor.apply();
     }
-
 }

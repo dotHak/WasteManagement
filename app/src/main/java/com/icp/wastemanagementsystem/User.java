@@ -8,11 +8,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class User {
+public class User{
 
     private String mUsername;
     private String mEmail;
     private int mCredit;
+    private boolean mIsAdmin;
     private Map<String, List<String>> mBarcodeList;
 
     public User() {
@@ -72,6 +73,13 @@ public class User {
         mCredit = credit;
     }
 
+    public boolean isIsAdmin() {
+        return mIsAdmin;
+    }
+
+    public void setIsAdmin(boolean misAdmin) {
+        this.mIsAdmin = misAdmin;
+    }
 
     public Map<String, List<String>> getBarcodeList() {
         return mBarcodeList;
@@ -79,5 +87,17 @@ public class User {
 
     public void setBarcodeList(Map<String, List<String>> barcodeList) {
         mBarcodeList = barcodeList;
+    }
+
+    public int allBarcode(){
+        int allScannedBarcode = 0;
+        if(mBarcodeList != null){
+            for(Map.Entry<String, List<String>> entry: mBarcodeList.entrySet()){
+                ArrayList<String> list = (ArrayList<String>) entry.getValue();
+                allScannedBarcode += list.size();
+            }
+        }
+
+        return allScannedBarcode;
     }
 }

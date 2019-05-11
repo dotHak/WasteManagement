@@ -12,6 +12,7 @@ public class BinsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        getActivity().setTitle("Ranks");
         return inflater.inflate(R.layout.fragment_bins, container, false);
     }
 }

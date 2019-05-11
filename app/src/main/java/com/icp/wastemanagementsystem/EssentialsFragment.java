@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -23,6 +22,7 @@ public class EssentialsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_essentials, container, false);
+        getActivity().setTitle("Essentials Stocks");
         EssentialList = getAllStocks.getEssentialstocks().getStock();
         ArkonoStockAdapter adapter = new ArkonoStockAdapter(getActivity(),R.layout.stock_item, EssentialList);
         listView = view.findViewById(R.id.essentialsListView);
@@ -35,6 +35,7 @@ public class EssentialsFragment extends Fragment {
                 intent.putExtra("quantity", EssentialList.get(position).getQuantity());
                 intent.putExtra("price", EssentialList.get(position).getPrice());
                 intent.putExtra("position", position);
+                intent.putExtra("type", EssentialList.get(position).getType());
                 startActivityForResult(intent,1);
             }
         });
@@ -51,9 +52,7 @@ public class EssentialsFragment extends Fragment {
                 ArkonoStockAdapter adapter = new ArkonoStockAdapter(getActivity(),R.layout.stock_item, EssentialList);
                 listView.setAdapter(adapter);
             }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(getActivity(), "Check the quanity", Toast.LENGTH_SHORT).show();
-            }
+
         }
     }
 }
