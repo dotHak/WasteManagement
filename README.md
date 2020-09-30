@@ -3,6 +3,8 @@ An android application to manage recycling of waste products. User are credited 
 
 *The app depends on **Google Vision Api** and **Firebase authentication and database**.*
 
+**Screenshots**
+
 <img src="./README_IMAGES/Screenshot_20200930_194614_com.icp.wastemanagementsystem.jpg" width="400" height="700">
 <img src="./README_IMAGES/Screenshot_20200930_194622_com.icp.wastemanagementsystem.jpg" width="400" height="700">
 <img src="./README_IMAGES/Screenshot_20200930_194630_com.icp.wastemanagementsystem.jpg" width="400" height="700">
@@ -11,3 +13,5 @@ An android application to manage recycling of waste products. User are credited 
 <img src="./README_IMAGES/Screenshot_20200930_194658_com.icp.wastemanagementsystem.jpg" width="400" height="700">
 <img src="./README_IMAGES/Screenshot_20200930_194710_com.icp.wastemanagementsystem.jpg" width="400" height="700">
 <img src="./README_IMAGES/Screenshot_20200930_194747_com.icp.wastemanagementsystem.jpg" width="400" height="700">
+<img src="./README_IMAGES/Screenshot_20200930_200541_com.icp.wastemanagementsystem.jpg" width="400" height="700">
+<img src="./README_IMAGES/Screenshot_20200930_200551_com.icp.wastemanagementsystem.jpg" width="400" height="700">
